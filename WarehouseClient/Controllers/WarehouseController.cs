@@ -1,16 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WarehouseClient.Services;
+using System.Data.SqlClient;
+using Warehouse.DTOs;
+using Warehouse.Services;
 
-namespace WarehouseClient.Controllers;
-[ApiController]
-[Route("api/[controller]")]
-public class WarehouseController(IDbService db) : ControllerBase
+namespace Warehouse.Controllers
 {
-    [HttpGet]
-    public async Task<IActionResult> GetProduct(int id)
+    [ApiController]
+    [Route("controller-warehouse")]
+    public class WarehouseController:ControllerBase
     {
-        var result = await db.GetProductDTOAsync(id);
-        if (result is null) return NotFound($"Product with id: {id} does not exist");
-        return Ok(result);
+        private readonly IDbService _dbService;
+
+        public WarehouseController(IDbService service)
+        {
+            _dbService = service;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProductsWarehouse()
+        {
+            return Ok(await _dbService.GetWarehouseProducts());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProductWarehouse(CreateProductWarehouseRequest request)
+        {
+            return Ok(await _dbService.CreateProductWarehouse(request));
+        }
     }
 }

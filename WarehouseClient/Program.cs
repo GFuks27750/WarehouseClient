@@ -1,4 +1,4 @@
-using WarehouseClient.Services;
+using Warehouse.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
