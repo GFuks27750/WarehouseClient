@@ -6,7 +6,7 @@ using Warehouse.Services;
 namespace Warehouse.Controllers
 {
     [ApiController]
-    [Route("controller-warehouse")]
+    [Route("[controller]")]
     public class WarehouseController:ControllerBase
     {
         private readonly IDbService _dbService;
